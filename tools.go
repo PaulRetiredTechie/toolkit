@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -179,4 +180,14 @@ func (t *Tools) Slugify(s string) (string, error) {
 		return "", errors.New("after removing character, slug is zero length")
 	}
 	return slug, nil
+}
+
+// DownLoadStaticFile downloads a file, and tries to force the browser to avoid displaying it
+// in the browser window by setting content disposition. it also allows sepcification of the 
+// display name
+func (t *Tools) DownLoadStaticFile(w http.ResponseWriter, r *http.Request, p ,file, displayName string) {
+	fp := path.Join(p, file)
+	w.Header().Set("Content-Disposition", fmt.Sprintf("attachment; filename=\"%s\"", displayName))
+
+	http.ServeFile(w, r, fp)
 }
