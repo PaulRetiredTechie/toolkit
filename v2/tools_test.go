@@ -236,7 +236,7 @@ func TestTools_downloadStaticFile(t *testing.T) {
 
 	var testTool Tools
 
-	testTool.DownLoadStaticFile(rr, req, "./testdata/pic.jpg", "puppy.jpg")
+	testTool.DownLoadStaticFile(rr, req, "./testdata", "pic.jpg", "puppy.jpg")
 
 	res := rr.Result()
 	defer res.Body.Close()
